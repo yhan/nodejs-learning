@@ -1,7 +1,10 @@
-var url = "https://my.org/log";
 
-function log(message){
-    console.log(message);
+const EventEmitter = require("events");
+
+class Logger extends EventEmitter{
+    log(message){
+        this.emit("messageLogged", message);
+    }
 }
 
-module.exports.notify = log;
+module.exports = Logger;
