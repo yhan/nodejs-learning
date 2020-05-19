@@ -1,3 +1,3 @@
-const log = require("./log");
+// const log = require("./log");
 
-log.notify("hello world");
+// log.notify("hello world");
