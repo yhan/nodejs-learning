@@ -9,7 +9,7 @@ const fs = require("fs")
 fs.readdir('./', (err, files) => {
     // Either err or files is null
     if(err)
-        console.log(err)
+        console.log(err);
     else
-        console.log(files)
+        console.log(files);
 })
