@@ -1,5 +1,5 @@
 
-import Logger from "./log";
+const Logger = require("./log");
 const logger = new Logger();
 
 //register

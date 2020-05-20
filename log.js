@@ -1,5 +1,5 @@
 
-import EventEmitter from "events";
+const EventEmitter = require("events");
 
 class Logger extends EventEmitter{
     log(message){
@@ -7,4 +7,4 @@ class Logger extends EventEmitter{
     }
 }
 
-export default Logger;
+module.exports = Logger;
