@@ -1,14 +1,14 @@
-function add(x, y) {
-    return x+ y;
+function add(x, y, z) {
+    return x + y + z;
 }
 
-function partialApply(func, n){
-    return function(m){
-        return func(n, m);
-    }
+function partialApply(func, x){
+    return function(m, l){
+        return func(x, m, l);
+    };
 }
 
-const fiveApplied = partialApply(add, 5);
-const sum = fiveApplied(2);
+const applied = partialApply(add, 5);
+const sum = applied(2, 6);
 
 console.log(sum);
