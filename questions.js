@@ -2,7 +2,8 @@
 // ask them one by one, record answers
 // display all answers when I replied all the questions
 const collectAnswer = require("./lib/collectAnswers");
-
+const {EventEmitter} = require("events");
+const emitter = new EventEmitter();
 
 const questions = [
     "How old are you?",
@@ -10,8 +11,15 @@ const questions = [
     "What are you going to do with Node.js?"
 ];
 
-collectAnswer(questions, (answers) => {
+emitter.on("answered", (a, answers) => {
+    answers.push(a);
+});
+
+emitter.on("finished", allAnswers => {
     console.log("Thank you for your answers. ");
-    console.log(answers);
+    console.log(allAnswers);
     process.exit();
 });
+
+
+collectAnswer(questions, emitter);

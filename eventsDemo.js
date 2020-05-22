@@ -1,5 +1,6 @@
 const events = require("events");
 
+// Is equivalent to: const {EventEmitter  } = require("events"); const emitter =  new EventEmitter();
 const emitter = new events.EventEmitter();
 
 emitter.on("customEvent", ({data, from} ) => {
