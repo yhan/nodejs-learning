@@ -15,8 +15,13 @@ answered.on("answered", (a, answers) => {
     answers.push(a);
 });
 
+
+// Order of subscription is treated in the order of file arrangement
 answered.on("finished", allAnswers => {
     console.log("Thank you for your answers. ");
     console.log(allAnswers);
+});
+
+answered.on("finished", allAnswers => {
     process.exit();
 });
