@@ -27,7 +27,7 @@ class StreamFromArray extends Readable {
             this.index++;
         }
         else{
-            this.push(null);
+            this.push(null); // end of stream
         }
 
     }

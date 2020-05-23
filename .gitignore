@@ -117,3 +117,5 @@ dist
 
 # test assets
 *.txt
+assets/
+assets2/
