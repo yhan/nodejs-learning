@@ -4,7 +4,33 @@ const { promisify } = require("util");
 
 const file = "./assets/powder-day.mp4";
 
-const server = http.createServer(async (req, res) => {
+const server = http.createServer((req, res) => {
+    if (req.url === "/video") {
+        respondVideo(req, res);
+        return;
+    }
+    if (req.method === "POST") {
+        
+        //pipe to writable streams
+        // cannot chain here: `Cannot pipe, not readable`
+        req.pipe(res);//response is writable not readable
+        req.pipe(process.stdout);
+        req.pipe(fs.createWriteStream("./assets/uploaded.data"));
+
+        return;
+    }
+    if (req.url === "/") {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(`
+            <form enctype="multipart/form-data" method="POST" action="/">
+                <input type="file" name="upload-file" />
+                <button>Upload File</button>
+            </form>
+            `);
+    }
+});
+
+async function respondVideo(req, res) {
     if (req.url.toString() === "/") {
         const sizePromise = promisify(fs.stat);
         const { size } = await sizePromise(file);
@@ -37,7 +63,7 @@ const server = http.createServer(async (req, res) => {
                 .pipe(res);
         }
     }
-});
+}
 
 server.listen(3000, () => {
     console.log("Listen on port 3000");
