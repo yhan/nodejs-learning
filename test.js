@@ -1,5 +1,15 @@
-const answers = [];
+const EventEmitter = require('events');
+const util = require('util');
 
-answers.push("Super");
+function MyEmitter() {
+  EventEmitter.call(this);
 
-console.log(answers);
+  setImmediate(() => this.emit('event'));
+  
+}
+util.inherits(MyEmitter, EventEmitter);
+
+const myEmitter = new MyEmitter();
+myEmitter.on('event', () => {
+  console.log('an event occurred!');
+});
