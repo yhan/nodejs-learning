@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const { promisify } = require("util");
+const multiparty = require("multiparty");
 
 const file = "./assets/powder-day.mp4";
 
@@ -10,12 +11,23 @@ const server = http.createServer((req, res) => {
         return;
     }
     if (req.method === "POST") {
-        
+
         //pipe to writable streams
         // cannot chain here: `Cannot pipe, not readable`
-        req.pipe(res);//response is writable not readable
-        req.pipe(process.stdout);
-        req.pipe(fs.createWriteStream("./assets/uploaded.data"));
+        // req.pipe(res);//response is writable not readable
+        // req.pipe(process.stdout);
+        // req.pipe(fs.createWriteStream("./assets/uploaded.data"));
+
+        var form = new multiparty.Form();
+        form.on("part", part => {
+            part.pipe(fs.createWriteStream(`./assets/${part.filename}`))
+                .on("close", () => {
+                    res.writeHead(200, { "Content-Type": "text/html" });
+                    res.end(`<h1>File ${part.filename} successfully uploaded</h1>`);
+                });
+        });
+        form.parse(req);
+
 
         return;
     }
